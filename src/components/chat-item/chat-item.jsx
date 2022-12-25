@@ -4,18 +4,20 @@ import { deleteDoc, doc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
 
-import { Modal, Spin, message } from "antd";
+import { Button, message, Modal } from "antd";
 import { ItemChat, ItemContent } from "./chat-item.syled";
+
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 export const ChatItem = ({ photoURL, displayName, text, uId, }) => {
   const [user] = useAuthState(auth);
 
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const deleteMassage = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const noteRef = doc(db, "massages", text);
       await deleteDoc(noteRef);
       await message.success("Deleted :)")
@@ -28,7 +30,6 @@ export const ChatItem = ({ photoURL, displayName, text, uId, }) => {
       setLoading(false)
     }
   }
-
   return (
     <>
       <ItemChat
@@ -51,19 +52,32 @@ export const ChatItem = ({ photoURL, displayName, text, uId, }) => {
       <Modal
         title={displayName}
         open={open}
-        okText="delete"
-        okType="danger"
         onCancel={() => setOpen(false)}
-        onOk={deleteMassage}
+        loading={loading}
+        footer={[
+          <Button
+            key="submit"
+            type="primary"
+            loading={loading}
+            onClick={() => setOpen(false)}
+            icon={<EditOutlined style={{ fontSize: '16px' }} />}
+
+          >
+            Edite
+          </Button>,
+          <Button
+            key="link"
+            type="primary"
+            danger
+            onClick={deleteMassage}
+            loading={loading}
+            icon={<DeleteOutlined style={{ fontSize: '16px' }} />}
+          >
+            Delete
+          </Button>,
+        ]}
       >
-        {
-          loading ?
-            <div style={{ textAlign: "center" }}>
-              <Spin />
-            </div>
-            :
-            <p>{text}</p>
-        }
+        <p>{text}</p>
       </Modal>
     </>
   )

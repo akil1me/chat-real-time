@@ -8,6 +8,11 @@ import styled from "styled-components";
 
 const Header = styled.header`
   background-color: #bae7ff;
+  @media only  screen and (max-width: 500px) {
+    position: sticky;
+  top: 0;
+  z-index:1;
+  }
 `
 
 export const Chat = () => {

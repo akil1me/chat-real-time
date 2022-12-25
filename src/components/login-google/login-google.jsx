@@ -1,8 +1,7 @@
 import { Button } from "antd";
 import { LoginAcc, LoginGoogleContent } from "./login-google.styled";
 
-import { ReactComponent as GoogleSvg } from "../../assets/img/google.svg";
-import { ReactComponent as FacebookSvg } from "../../assets/img/facebook.svg";
+import { FacebookOutlined, GooglePlusOutlined } from "@ant-design/icons";
 
 export const LoginForm = ({ loginGoogle, loginFacebook }) => {
   return (
@@ -13,20 +12,16 @@ export const LoginForm = ({ loginGoogle, loginFacebook }) => {
           type="primary"
           danger
           onClick={loginGoogle}
-          icon={<GoogleSvg style={{ verticalAlign: "middle" }} />}
+          icon={<GooglePlusOutlined style={{ fontSize: '20px' }} />}
           style={{ marginBottom: 20 }}>
-          <span style={{ marginLeft: 10 }}>
-            Sign in google accunt
-          </span>
+          Sign in google accunt
         </Button>
 
         <Button
           type="primary"
           onClick={loginFacebook}
-          icon={<FacebookSvg style={{ verticalAlign: "middle" }} />} >
-          <span style={{ marginLeft: 10 }}>
-            Sign in facebook accunt
-          </span>
+          icon={<FacebookOutlined style={{ fontSize: '20px' }} />} >
+          Sign in facebook accunt
         </Button>
       </LoginGoogleContent>
     </LoginAcc >
