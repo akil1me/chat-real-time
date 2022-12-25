@@ -11,6 +11,7 @@ export const LoginForm = ({ loginGoogle, loginFacebook }) => {
         <h2 >Welcome to global chat</h2>
         <Button
           type="primary"
+          danger
           onClick={loginGoogle}
           icon={<GoogleSvg style={{ verticalAlign: "middle" }} />}
           style={{ marginBottom: 20 }}>
@@ -21,7 +22,7 @@ export const LoginForm = ({ loginGoogle, loginFacebook }) => {
 
         <Button
           type="primary"
-          danger onClick={loginFacebook}
+          onClick={loginFacebook}
           icon={<FacebookSvg style={{ verticalAlign: "middle" }} />} >
           <span style={{ marginLeft: 10 }}>
             Sign in facebook accunt
