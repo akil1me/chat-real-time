@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth"
 import logo from "../../assets/img/logo.svg"
 import { auth } from "../../utils/firebase"
 
-export const NavBar = ({ login }) => {
+export const NavBar = ({ loginGoogle }) => {
   const [user] = useAuthState(auth);
 
   return (
@@ -21,7 +21,7 @@ export const NavBar = ({ login }) => {
           {user ?
             <Button onClick={() => signOut(auth)}>Logout</Button>
             :
-            <Button onClick={login}>Login</Button>
+            <Button onClick={loginGoogle}>Login</Button>
           }
         </Col>
       </Row>
