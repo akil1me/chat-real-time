@@ -24,7 +24,7 @@ export const ChatList = ({ docs, loading }) => {
         itemLayout="horizontal"
         size="large"
         dataSource={docs}
-        renderItem={(doc) => <ChatItem key={doc.id} {...doc} />}>
+        renderItem={(doc) => <ChatItem key={doc.id} {...doc} doc={doc} />}>
       </ListChat>
     </>
 
