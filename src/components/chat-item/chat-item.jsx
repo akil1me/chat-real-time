@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import { deleteDoc, doc, serverTimestamp, Timestamp, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
 
-import { Button, message, Modal, Input } from "antd";
+import { Button, Input, message, Modal } from "antd";
 import { ItemChat, ItemContent, TimeChat } from "./chat-item.syled";
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
@@ -17,9 +17,7 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
   const [deleting, setDeleting] = useState(false);
   const [updeting, setUpdeting] = useState(false);
   const [edited, setEdited] = useState("")
-  const [editedValue, setEditedValue] = useState(text);
-  const date = new Date(createdAt?.seconds * 1000);
-  const time = date.toTimeString().slice(0, 5)
+  const [editedValue, setEditedValue] = useState("");
 
   const editeMassage = async () => {
     try {
@@ -59,6 +57,12 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
       setDeleting(false)
     }
   }
+
+  //Get Date
+  const date = new Date(createdAt?.seconds * 1000);
+  //Get Time
+  const time = date.toTimeString().slice(0, 5)
+
   return (
     <>
       <ItemChat
@@ -74,7 +78,7 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
           <div>
             <h2>{displayName}</h2>
             <p>{text}</p>
-            <TimeChat datetime={date}>{edited === "" ? time : edited + time}</TimeChat>
+            <TimeChat datetime={date}>{!edited ? time : edited + time}</TimeChat>
           </div>
         </ItemContent>
       </ItemChat>
@@ -109,7 +113,7 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
         <p>{text}</p>
 
         <Modal title="Basic Modal" open={editeOpen} loading={updeting} onOk={editeMassage} onCancel={() => setEditeOpen(false)}>
-          <Input value={editedValue} onChange={(e) => setEditedValue(e.target.value)} />
+          <Input defaultValue={text} onChange={(e) => setEditedValue(e.target.value)} />
         </Modal>
       </Modal>
     </>
