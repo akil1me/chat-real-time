@@ -33,3 +33,10 @@ display: flex;
   }
   }
 `
+
+export const TimeChat = styled.time`
+font-size:12px;
+  position: absolute;
+  bottom:-10px;
+  right: 0;
+`

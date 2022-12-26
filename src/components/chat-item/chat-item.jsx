@@ -1,22 +1,25 @@
 import { useState } from "react";
 
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { deleteDoc, doc, serverTimestamp, Timestamp, updateDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
 
 import { Button, message, Modal, Input } from "antd";
-import { ItemChat, ItemContent } from "./chat-item.syled";
+import { ItemChat, ItemContent, TimeChat } from "./chat-item.syled";
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
-export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id }) => {
+export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, createdAt }) => {
   const [user] = useAuthState(auth);
 
   const [open, setOpen] = useState(false);
   const [editeOpen, setEditeOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [updeting, setUpdeting] = useState(false);
+  const [edited, setEdited] = useState("")
   const [editedValue, setEditedValue] = useState(text);
+  const date = new Date(createdAt?.seconds * 1000);
+  const time = date.toTimeString().slice(0, 5)
 
   const editeMassage = async () => {
     try {
@@ -25,12 +28,15 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id }) => {
       setEditeOpen(false)
       await updateDoc(noteRef, {
         ...oldDoc,
+        createdAt: serverTimestamp(),
         text: editedValue,
       });
       await message.success("Edited :)")
+      setEdited("Edited in ")
     }
     catch (err) {
       console.log(err);
+      setEdited("")
       message.error("Your massage is not edited :(")
     }
     finally {
@@ -68,6 +74,7 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id }) => {
           <div>
             <h2>{displayName}</h2>
             <p>{text}</p>
+            <TimeChat datetime={date}>{edited === "" ? time : edited + time}</TimeChat>
           </div>
         </ItemContent>
       </ItemChat>
@@ -101,7 +108,7 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id }) => {
       >
         <p>{text}</p>
 
-        <Modal title="Basic Modal" open={editeOpen} onOk={editeMassage} onCancel={() => setEditeOpen(false)}>
+        <Modal title="Basic Modal" open={editeOpen} loading={updeting} onOk={editeMassage} onCancel={() => setEditeOpen(false)}>
           <Input value={editedValue} onChange={(e) => setEditedValue(e.target.value)} />
         </Modal>
       </Modal>
