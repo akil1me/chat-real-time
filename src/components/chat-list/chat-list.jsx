@@ -10,21 +10,11 @@ export const ChatList = ({ docs, loading }) => {
 
   return (
     <>
-      {/* <List
-
-        itemLayout="horizontal"
-        size="large"
-        dataSource={docs}
-        renderItem={(doc) => <ChatItem key={doc.id} {...doc} />}
-      >
-
-      </List> */}
-
       <ListChat
         itemLayout="horizontal"
         size="large"
         dataSource={docs}
-        renderItem={(doc) => <ChatItem key={doc.id} {...doc} doc={doc} />}>
+        renderItem={(doc) => <ChatItem key={doc.id} {...doc} oldDoc={doc} />}>
       </ListChat>
     </>
 

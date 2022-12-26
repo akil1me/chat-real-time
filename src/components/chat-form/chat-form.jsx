@@ -14,7 +14,6 @@ const FromChat = styled.form`
     z-index: 1;
   }
 `
-
 export const ChatForm = ({ db }) => {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false)
@@ -25,15 +24,16 @@ export const ChatForm = ({ db }) => {
     (async () => {
       try {
         setLoading(true)
-        const docRef = doc(db, "massages", value)
-        await setDoc(docRef, {
+        const newDoc = {
           displayName: user?.displayName,
           uId: user?.uid,
           id: new Date().getTime(),
           photoURL: user?.photoURL,
           text: value,
           createdAt: serverTimestamp(),
-        })
+        }
+        const docRef = doc(db, "massages", String(newDoc.id))
+        await setDoc(docRef, newDoc)
       }
       catch (err) {
         console.log(err);

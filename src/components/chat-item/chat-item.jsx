@@ -1,24 +1,47 @@
 import { useState } from "react";
 
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
 
-import { Button, message, Modal } from "antd";
+import { Button, message, Modal, Input } from "antd";
 import { ItemChat, ItemContent } from "./chat-item.syled";
 
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
-export const ChatItem = ({ photoURL, displayName, text, uId, }) => {
+export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id }) => {
   const [user] = useAuthState(auth);
 
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [editeOpen, setEditeOpen] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [updeting, setUpdeting] = useState(false);
+  const [editedValue, setEditedValue] = useState(text);
+
+  const editeMassage = async () => {
+    try {
+      setUpdeting(true);
+      const noteRef = doc(db, "massages", String(id));
+      setEditeOpen(false)
+      await updateDoc(noteRef, {
+        ...oldDoc,
+        text: editedValue,
+      });
+      await message.success("Edited :)")
+    }
+    catch (err) {
+      console.log(err);
+      message.error("Your massage is not edited :(")
+    }
+    finally {
+      setUpdeting(false)
+    }
+  }
 
   const deleteMassage = async () => {
     try {
-      setLoading(true);
-      const noteRef = doc(db, "massages", text);
+      setDeleting(true);
+      const noteRef = doc(db, "massages", String(id));
       await deleteDoc(noteRef);
       await message.success("Deleted :)")
     }
@@ -27,7 +50,7 @@ export const ChatItem = ({ photoURL, displayName, text, uId, }) => {
       message.error("Your massage is not deleted :(")
     }
     finally {
-      setLoading(false)
+      setDeleting(false)
     }
   }
   return (
@@ -53,13 +76,12 @@ export const ChatItem = ({ photoURL, displayName, text, uId, }) => {
         title={displayName}
         open={open}
         onCancel={() => setOpen(false)}
-        loading={loading}
         footer={[
           <Button
             key="submit"
             type="primary"
-            loading={loading}
-            onClick={() => setOpen(false)}
+            loading={updeting}
+            onClick={() => setEditeOpen(true)}
             icon={<EditOutlined style={{ fontSize: '16px' }} />}
 
           >
@@ -70,7 +92,7 @@ export const ChatItem = ({ photoURL, displayName, text, uId, }) => {
             type="primary"
             danger
             onClick={deleteMassage}
-            loading={loading}
+            loading={deleting}
             icon={<DeleteOutlined style={{ fontSize: '16px' }} />}
           >
             Delete
@@ -78,6 +100,10 @@ export const ChatItem = ({ photoURL, displayName, text, uId, }) => {
         ]}
       >
         <p>{text}</p>
+
+        <Modal title="Basic Modal" open={editeOpen} onOk={editeMassage} onCancel={() => setEditeOpen(false)}>
+          <Input value={editedValue} onChange={(e) => setEditedValue(e.target.value)} />
+        </Modal>
       </Modal>
     </>
   )
