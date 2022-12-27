@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const ItemChat = styled.li`
 margin-bottom: 20px;
   padding: 10px 10px 10px 20px;
+  min-width: 20px;
   max-width:200px;
   border-radius:10px;
   height:auto;

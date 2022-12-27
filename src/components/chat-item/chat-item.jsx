@@ -4,43 +4,41 @@ import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
 
-import { Button, Input, message, Modal } from "antd";
+import { Button, Input, message, Modal, Spin } from "antd";
 import { ItemChat, ItemContent, TimeChat } from "./chat-item.syled";
 
-import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons';
 
-export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, createdAt }) => {
+export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, createdAt, edited, editedAt }) => {
   const [user] = useAuthState(auth);
 
   const [open, setOpen] = useState(false);
   const [editeOpen, setEditeOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [updeting, setUpdeting] = useState(false);
-  const [edited, setEdited] = useState("")
-  const [editedValue, setEditedValue] = useState("");
+  const [editedValue, setEditedValue] = useState(text);
 
   const editeMassage = async () => {
     try {
-      setUpdeting(true);
       const noteRef = doc(db, "massages", String(id));
-      setEditeOpen(false)
+
+      setUpdeting(true);
+      setEditeOpen(false);
       await updateDoc(noteRef, {
         ...oldDoc,
-        createdAt: serverTimestamp(),
+        editedAt: serverTimestamp(),
+        edited: true,
         text: editedValue,
       });
       await message.success("Edited :)")
-      setEdited("Edited in ")
+      setUpdeting(false)
     }
     catch (err) {
       console.log(err);
-      setEdited("")
       message.error("Your massage is not edited :(")
     }
-    finally {
-      setUpdeting(false)
-    }
   }
+  console.log(edited);
 
   const deleteMassage = async () => {
     try {
@@ -63,6 +61,10 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
   //Get Time
   const time = date.toTimeString().slice(0, 5)
 
+  //Get edited Date and Time 
+  const dateEdited = new Date(editedAt?.seconds * 1000)
+  const timeEdited = dateEdited.toTimeString().slice(0, 5)
+
   return (
     <>
       <ItemChat
@@ -78,7 +80,12 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
           <div>
             <h2>{displayName}</h2>
             <p>{text}</p>
-            <TimeChat datetime={date}>{!edited ? time : edited + time}</TimeChat>
+            <TimeChat datetime={date}>
+              {
+                time === "Inval" ? <Spin indicator={<LoadingOutlined style={{ fontSize: 12 }} />} /> :
+                  (!edited ? (time !== "Inval" && time) : (timeEdited !== "Inval" && (edited && ("edited " + timeEdited))))
+              }
+            </TimeChat>
           </div>
         </ItemContent>
       </ItemChat>

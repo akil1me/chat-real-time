@@ -2,18 +2,9 @@ import { Button, Col, Input, Row } from "antd";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import styled from "styled-components";
 import { auth } from "../../utils/firebase";
 
-const FromChat = styled.form`
-  @media only  screen and (max-width: 500px) {
-    position: fixed;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 1;
-  }
-`
+
 export const ChatForm = ({ db }) => {
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false)
@@ -30,6 +21,8 @@ export const ChatForm = ({ db }) => {
           id: new Date().getTime(),
           photoURL: user?.photoURL,
           text: value,
+          edited: false,
+          editedAt: serverTimestamp(),
           createdAt: serverTimestamp(),
         }
         const docRef = doc(db, "massages", String(newDoc.id))
@@ -48,7 +41,7 @@ export const ChatForm = ({ db }) => {
   }
 
   return (
-    <FromChat onSubmit={handleSubmitMassage}>
+    <form onSubmit={handleSubmitMassage}>
       <Row>
         <Col span={19}>
           <Input
@@ -65,6 +58,6 @@ export const ChatForm = ({ db }) => {
           </Button>
         </Col>
       </Row>
-    </FromChat>
+    </form>
   )
 }
