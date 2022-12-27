@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
 
 import { Button, Input, message, Modal, Spin } from "antd";
-import { ItemChat, ItemContent, TimeChat } from "./chat-item.syled";
+import { ItemChat, ItemContent, TimeChat, UserAvatar } from "./chat-item.syled";
 
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons';
 
@@ -69,20 +69,25 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
     <>
       <ItemChat
         style={{
-          marginLeft: user.uid === uId ? "auto" : "0",
+          marginLeft: user.uid === uId ? "auto" : "20px",
           backgroundColor: user.uid === uId ? "#d5edb8" : "#fff",
           cursor: user.uid === uId ? "pointer" : "auto"
         }}
+
         onClick={user.uid === uId ? (() => setOpen(true)) : null}
       >
         <ItemContent >
-          <img src={photoURL} alt="user avatar" width={30} height={30} />
+          {
+            (user.uid !== uId) && <UserAvatar src={photoURL} alt="user avatar" width={30} height={30} />
+          }
           <div>
-            <h2>{displayName}</h2>
+            {
+              (user.uid !== uId) && <h2>{displayName}</h2>
+            }
             <p>{text}</p>
             <TimeChat datetime={date}>
               {
-                time === "Inval" ? <Spin indicator={<LoadingOutlined style={{ fontSize: 12 }} />} /> :
+                (time || timeEdited) === "Inval" ? <Spin indicator={<LoadingOutlined style={{ fontSize: 12 }} />} /> :
                   (!edited ? (time !== "Inval" && time) : (timeEdited !== "Inval" && (edited && ("edited " + timeEdited))))
               }
             </TimeChat>
@@ -120,7 +125,7 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
         <p>{text}</p>
 
         <Modal title="Basic Modal" open={editeOpen} loading={updeting} onOk={editeMassage} onCancel={() => setEditeOpen(false)}>
-          <Input defaultValue={text} onChange={(e) => setEditedValue(e.target.value)} />
+          <Input defaultValue={text} onChange={(e) => setEditedValue(e.target.value)} required />
         </Modal>
       </Modal>
     </>

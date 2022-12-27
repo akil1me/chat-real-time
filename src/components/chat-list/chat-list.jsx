@@ -5,7 +5,7 @@ import { ListChat } from "./chat-list.styled"
 export const ChatList = ({ docs, loading }) => {
 
   if (loading) {
-    return <Loader vh="vh-70" />
+    return <Loader vh="vh-75" />
   }
 
   return (

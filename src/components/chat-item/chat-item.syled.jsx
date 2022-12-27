@@ -1,11 +1,12 @@
 import styled from "styled-components";
 
 export const ItemChat = styled.li`
-margin-bottom: 20px;
-  padding: 10px 10px 10px 20px;
+ margin-bottom: 20px;
+  padding:7px;
+  padding-bottom:10px;
   min-width: 20px;
   max-width:200px;
-  border-radius:10px;
+  border-radius:16px;
   height:auto;
  
 `
@@ -13,12 +14,6 @@ margin-bottom: 20px;
 export const ItemContent = styled.div`
 position: relative;
 display: flex;
-
-  &> img {
-  width: 30px;
-  height: 30px;
-  border-radius:50%;
-  }
 
   &> div {
   margin-left:10px;
@@ -34,10 +29,20 @@ display: flex;
   }
   }
 `
+export const UserAvatar = styled.img`
+  position:absolute;
+  bottom: -10px;
+  left: -40px;
+  width: 30px;
+  height: 30px;
+  border-radius:50%;
+
+
+`
 
 export const TimeChat = styled.time`
-font-size:12px;
+font-size:11px;
   position: absolute;
-  bottom:-10px;
-  right: 0;
+  bottom:-9px;
+  right: 3px;
 `

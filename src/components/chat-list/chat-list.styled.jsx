@@ -6,7 +6,9 @@ export const ListChat = styled(List)`
   margin-bottom: 20px;
   border-radius: 10px;
   padding:10px 20px ; 
-  height:600px; 
+  height:75vh; 
+
+ 
  
   ::-webkit-scrollbar{
     width: 5px;
