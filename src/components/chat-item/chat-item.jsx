@@ -87,7 +87,7 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
             <p>{text}</p>
             <TimeChat datetime={date}>
               {
-                (time || timeEdited) === "Inval" ? <Spin indicator={<LoadingOutlined style={{ fontSize: 12 }} />} /> :
+                ((time && timeEdited) || (time || timeEdited)) === "Inval" ? <Spin indicator={<LoadingOutlined style={{ fontSize: 12 }} />} /> :
                   (!edited ? (time !== "Inval" && time) : (timeEdited !== "Inval" && (edited && ("edited " + timeEdited))))
               }
             </TimeChat>
