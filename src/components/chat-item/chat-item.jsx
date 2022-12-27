@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { Link } from "react-router-dom";
 import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../../utils/firebase";
@@ -10,7 +11,17 @@ import { ItemChat, ItemContent, TimeChat, UserAvatar } from "./chat-item.syled";
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons';
 import { ADMIN } from "../../utils/admin";
 
-export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, createdAt, edited, editedAt }) => {
+export const ChatItem = (
+  {
+    photoURL,
+    displayName,
+    text,
+    uId,
+    oldDoc,
+    id,
+    createdAt,
+    edited,
+    editedAt }) => {
   const [user] = useAuthState(auth);
 
   const [open, setOpen] = useState(false);
@@ -56,6 +67,11 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
     }
   }
 
+  const singlePage = (evt) => {
+    evt.stopPropagation();
+
+  }
+
   //Get Date
   const date = new Date(createdAt?.seconds * 1000);
   //Get Time
@@ -78,7 +94,11 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
       >
         <ItemContent >
           {
-            (user.uid !== uId) && <UserAvatar src={photoURL} alt="user avatar" width={30} height={30} />
+            (user.uid !== uId)
+            &&
+            <Link to={`/pofhile/${id}`} onClick={singlePage}>
+              <UserAvatar src={photoURL} alt="user avatar" width={30} height={30} />
+            </Link>
           }
           <div>
             {
@@ -124,7 +144,7 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
       >
         <p>{text}</p>
 
-        <Modal title="Basic Modal" open={editeOpen} loading={updeting} onOk={editeMassage} onCancel={() => setEditeOpen(false)}>
+        <Modal title="Edite message" open={editeOpen} loading={updeting} onOk={editeMassage} onCancel={() => setEditeOpen(false)}>
           <Input defaultValue={text} onChange={(e) => setEditedValue(e.target.value)} required />
         </Modal>
       </Modal>

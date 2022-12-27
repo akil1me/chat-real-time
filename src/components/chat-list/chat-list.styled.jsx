@@ -8,7 +8,9 @@ export const ListChat = styled(List)`
   padding:10px 20px ; 
   height:75vh; 
 
- 
+ @media only screen  and(max-width:500px){
+  height:72vh;
+ }
  
   ::-webkit-scrollbar{
     width: 5px;

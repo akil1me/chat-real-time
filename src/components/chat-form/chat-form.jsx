@@ -53,8 +53,14 @@ export const ChatForm = ({ db }) => {
 
         </Col>
         <Col span={4}>
-          <Button style={{ width: "100%", marginLeft: 10 }} size="large" type="primary" htmlType="submit" loading={loading}>
-            send
+          <Button
+            style={{ width: "100%", marginLeft: 10 }}
+            size="large" type="primary"
+            htmlType="submit"
+            loading={loading}>
+            {
+              !loading && "send"
+            }
           </Button>
         </Col>
       </Row>

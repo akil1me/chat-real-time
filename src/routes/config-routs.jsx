@@ -1,5 +1,5 @@
 import { Navigate, useRoutes } from "react-router-dom";
-import { Chat, Login } from "../pages";
+import { Chat, Login, Profil } from "../pages";
 
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "../utils/firebase";
@@ -8,6 +8,10 @@ const routes = [
   {
     path: "/",
     element: <Chat />,
+  },
+  {
+    path: "pofhile/:id",
+    element: <Profil />
   },
   {
     path: "*",
@@ -22,6 +26,7 @@ const loginRout =
       path: "login",
       element: <Login />
     },
+
     {
       path: "*",
       element: <Navigate to="/login" />,
