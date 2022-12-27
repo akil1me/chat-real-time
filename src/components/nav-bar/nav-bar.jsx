@@ -8,8 +8,7 @@ import { auth } from "../../utils/firebase"
 
 export const NavBar = ({ loginGoogle }) => {
   const [user] = useAuthState(auth);
-  console.log(user);
-
+  
   return (
     <nav>
       <Row justify="space-between" align="middle">

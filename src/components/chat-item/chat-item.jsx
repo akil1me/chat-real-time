@@ -8,6 +8,7 @@ import { Button, Input, message, Modal, Spin } from "antd";
 import { ItemChat, ItemContent, TimeChat, UserAvatar } from "./chat-item.syled";
 
 import { DeleteOutlined, EditOutlined, LoadingOutlined } from '@ant-design/icons';
+import { ADMIN } from "../../utils/admin";
 
 export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, createdAt, edited, editedAt }) => {
   const [user] = useAuthState(auth);
@@ -38,7 +39,6 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
       message.error("Your massage is not edited :(")
     }
   }
-  console.log(edited);
 
   const deleteMassage = async () => {
     try {
@@ -71,10 +71,10 @@ export const ChatItem = ({ photoURL, displayName, text, uId, oldDoc, id, created
         style={{
           marginLeft: user.uid === uId ? "auto" : "20px",
           backgroundColor: user.uid === uId ? "#d5edb8" : "#fff",
-          cursor: user.uid === uId ? "pointer" : "auto"
+          cursor: ((user.uid === uId) || user.uid === ADMIN) ? "pointer" : "auto"
         }}
 
-        onClick={user.uid === uId ? (() => setOpen(true)) : null}
+        onClick={((user.uid === uId) || user.uid === ADMIN) ? (() => setOpen(true)) : null}
       >
         <ItemContent >
           {

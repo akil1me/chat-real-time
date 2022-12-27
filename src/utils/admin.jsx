@@ -1,0 +1,1 @@
+export const ADMIN = "XXjtDgchUAdrt7tNIhxjrfytRun1"
