@@ -7,7 +7,6 @@ export const LoginAcc = styled.div`
   height: 80vh; 
  
 `
-
 export const LoginGoogleContent = styled.div`
   display: flex;
   align-items: center;
@@ -18,7 +17,11 @@ export const LoginGoogleContent = styled.div`
 
 &> h2{
   font-size: 20px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  text-align:center;
+}
+& > p{
+  margin-bottom:12px;
   text-align:center;
 }
 @media only screen and (max-width: 323px) {

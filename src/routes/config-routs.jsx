@@ -1,5 +1,5 @@
 import { Navigate, useRoutes } from "react-router-dom";
-import { Chat, Login, Profil } from "../pages";
+import { Chat, Login, Profil, Register } from "../pages";
 
 import { useAuthState } from "react-firebase-hooks/auth"
 import { auth } from "../utils/firebase";
@@ -20,13 +20,16 @@ const routes = [
 ]
 
 
-const loginRout =
+const authRout =
   [
     {
       path: "login",
       element: <Login />
     },
-
+    {
+      path: "register",
+      element: <Register />
+    },
     {
       path: "*",
       element: <Navigate to="/login" />,
@@ -38,5 +41,5 @@ export const ConfigRouts = () => {
 
   const [user] = useAuthState(auth)
 
-  return useRoutes(user ? [...routes] : [...loginRout])
+  return useRoutes(user ? [...routes] : [...authRout])
 }
