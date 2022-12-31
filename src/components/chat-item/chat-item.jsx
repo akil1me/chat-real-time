@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { Link } from "react-router-dom";
 import { deleteDoc, doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Link } from "react-router-dom";
 import { auth, db } from "../../utils/firebase";
 
 import { Button, Input, message, Modal, Spin } from "antd";
@@ -29,6 +29,12 @@ export const ChatItem = (
   const [deleting, setDeleting] = useState(false);
   const [updeting, setUpdeting] = useState(false);
   const [editedValue, setEditedValue] = useState(text);
+
+  const itemRef = useRef()
+
+  useEffect(() => {
+    itemRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [oldDoc])
 
   const editeMassage = async () => {
     try {
@@ -84,6 +90,7 @@ export const ChatItem = (
   return (
     <>
       <ItemChat
+        ref={itemRef}
         style={{
           marginLeft: user.uid === uId ? "auto" : "20px",
           backgroundColor: user.uid === uId ? "#d5edb8" : "#fff",

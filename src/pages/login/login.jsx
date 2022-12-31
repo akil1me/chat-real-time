@@ -1,12 +1,13 @@
 import { Container, AuthForm, NavBar } from "../../components";
 
 import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../utils/firebase";
+import { auth, db } from "../../utils/firebase";
 
 import styled from "styled-components";
 import { Button } from "antd";
 import { FacebookOutlined, GooglePlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
+import { doc, setDoc } from "firebase/firestore";
 
 const Header = styled.header`
   background-color: #bae7ff;
@@ -19,8 +20,14 @@ export const Login = () => {
 
   const loginGoogle = async () => {
     try {
-      await signInWithPopup(auth, googleProvider);
+      const { user } = await signInWithPopup(auth, googleProvider);
 
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        email: user.email,
+      })
     }
     catch (err) {
       console.log(err);
@@ -30,7 +37,12 @@ export const Login = () => {
   const loginFacebook = async () => {
     try {
       const { user } = await signInWithPopup(auth, facebookProvider)
-      console.log(user);
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        email: user.email,
+      })
     }
     catch (err) {
       console.log(err);
