@@ -62,7 +62,7 @@ export const Register = () => {
     <>
       <Header>
         <Container>
-          <NavBar />
+          <NavBar link={"/login"} title={"Log in"} />
         </Container>
       </Header>
 
@@ -73,21 +73,18 @@ export const Register = () => {
           handleSubmitRegister={handleSubmitRegister}
           title={"Register"}
           upload={
-            <Form.Item name={"file"}
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your img',
-                },
-              ]}>
+            <Form.Item
+              style={{ maxWidth: 218 }}
+              name={"file"}
+              rules={[{ required: true, message: "Please confirm your image" }]}>
               <Upload
                 name="file"
                 listType={"picture"}
                 maxCount={1}
                 method={"get"}
-
+                accept={".png,.jpeg,.ico,.svg,.jpg,.webp,.raw,.psd"}
               >
-                <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                <Button icon={<UploadOutlined />}>Upload image</Button>
               </Upload>
             </Form.Item>
           }

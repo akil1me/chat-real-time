@@ -43,18 +43,18 @@ export const ChatForm = ({ db }) => {
   return (
     <form onSubmit={handleSubmitMassage}>
       <Row>
-        <Col span={19}>
+        <Col span={18}>
           <Input
             size="large"
             value={value}
-            style={{ width: "100%", marginLeft: 2 }}
+            style={{ width: "100%" }}
             onChange={(e) => setValue(e.target.value)}
             placeholder="print..." required />
 
         </Col>
-        <Col span={4}>
+        <Col span={6}>
           <Button
-            style={{ width: "100%", marginLeft: 10 }}
+            style={{ width: "100%", marginLeft: 5 }}
             size="large" type="primary"
             htmlType="submit"
             loading={loading}>

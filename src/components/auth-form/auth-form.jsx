@@ -57,6 +57,7 @@ export const AuthForm = ({
         {(title === "Log in") && <p>Please enter your Login and your Password</p>}
 
         <Form
+          style={{ width: "100%" }}
           name="normal_login"
           className="login-form"
           initialValues={{

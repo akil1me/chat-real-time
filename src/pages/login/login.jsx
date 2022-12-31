@@ -51,7 +51,7 @@ export const Login = () => {
     <>
       <Header>
         <Container>
-          <NavBar loginGoogle={loginGoogle} />
+          <NavBar link={"/register"} title={"Sign up"} />
         </Container>
       </Header>
 

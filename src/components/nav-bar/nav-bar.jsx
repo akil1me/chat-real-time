@@ -1,21 +1,22 @@
-import { Button, Col, Row } from "antd"
-import { signOut } from "firebase/auth"
-import { useAuthState } from "react-firebase-hooks/auth"
+import { Button, Col, Row } from "antd";
+import { signOut } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { Link } from "react-router-dom";
 
 import logo from "../../assets/img/logo.svg";
-import userImg from "../../assets/img/user.svg"
-import { auth } from "../../utils/firebase"
+import userImg from "../../assets/img/user.svg";
+import { auth } from "../../utils/firebase";
 
-export const NavBar = () => {
+export const NavBar = ({ link, title }) => {
   const [user] = useAuthState(auth);
+
 
   return (
     <nav>
       <Row justify="space-between" align="middle">
         <Col>
           <Link to="index.html">
-            <img style={{ borderRadius: "50%" }} src={user ? (user.photoURL ? user.photoURL : userImg) : logo} alt="site logo" width={40} height={40} />
+            <img style={{ borderRadius: "50%" }} src={user ? (user.photoURL !== null ? user.photoURL : userImg) : logo} alt="site logo" width={40} height={40} />
           </Link>
         </Col>
         {
@@ -26,7 +27,9 @@ export const NavBar = () => {
             <Button onClick={() => signOut(auth)}>Logout</Button>
             :
             <>
-              <Button >Sig up</Button>
+              <Button>
+                <Link to={link} >{title}</Link>
+              </Button>
             </>
           }
         </Col>
