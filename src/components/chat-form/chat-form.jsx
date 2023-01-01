@@ -21,6 +21,7 @@ export const ChatForm = ({ db }) => {
           id: new Date().getTime(),
           photoURL: user?.photoURL,
           text: value,
+          email: user?.email,
           edited: false,
           editedAt: serverTimestamp(),
           createdAt: serverTimestamp(),

@@ -4,3 +4,4 @@ export * from "./auth-form";
 export * from "./loader";
 export * from "./chat-form";
 export * from "./chat-list";
+export * from "./profil-content";
