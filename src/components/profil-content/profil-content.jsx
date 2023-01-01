@@ -1,8 +1,8 @@
 import { ArrowLeftOutlined } from "@ant-design/icons";
 import { Card, Image, Spin } from "antd";
-import { GoBack, ProfilMenu, SpinnerDiv } from "./profil-content.styled";
+import { GoBack, PrifileFlex, ProfilMenu, SpinnerDiv } from "./profil-content.styled";
 
-export const ProfilContent = ({ id, displayName, photoURL, email }) => {
+export const ProfilContent = ({ id, displayName, photoURL, email, edite, deleteProfile }) => {
 
   return (
     <ProfilMenu>
@@ -10,18 +10,20 @@ export const ProfilContent = ({ id, displayName, photoURL, email }) => {
         <ArrowLeftOutlined />
       </GoBack>
       {
-        !id ?
+        !email ?
           <SpinnerDiv><Spin /></SpinnerDiv>
           :
           <div>
-            <div>
+            <PrifileFlex>
               <Image
                 style={{ borderRadius: "50%" }}
                 width={100}
                 height={100}
                 src={photoURL ? photoURL : "error"}
               />
-            </div>
+              {edite}
+              {deleteProfile}
+            </PrifileFlex>
 
             <Card
               style={{
@@ -29,7 +31,7 @@ export const ProfilContent = ({ id, displayName, photoURL, email }) => {
               }}
             >
               <p>Name: {displayName}</p>
-              <p>Id: {id}</p>
+              <p>Id: {id || new Date().getTime()}</p>
               <p>Email: {email}</p>
             </Card>
 

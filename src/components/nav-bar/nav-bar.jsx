@@ -10,12 +10,11 @@ import { auth } from "../../utils/firebase";
 export const NavBar = ({ link, title }) => {
   const [user] = useAuthState(auth);
 
-
   return (
     <nav>
       <Row justify="space-between" align="middle">
         <Col>
-          <Link to="index.html">
+          <Link to={user ? `/user-profile` : "index.html"}>
             <img style={{ borderRadius: "50%" }} src={user ? (user.photoURL !== null ? user.photoURL : userImg) : logo} alt="site logo" width={40} height={40} />
           </Link>
         </Col>

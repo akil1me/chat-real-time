@@ -11,6 +11,7 @@ export const ProfilMenu = styled.div`
   background-color: #fff;
 `
 export const GoBack = styled(Link)`
+  color:#1677ff;
   font-size: 20px;
   transition: opacity 0.4s ease;
   :hover{
@@ -22,4 +23,7 @@ export const SpinnerDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content:center;
+`
+export const PrifileFlex = styled.div`
+  display: flex;
 `
