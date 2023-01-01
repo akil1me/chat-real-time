@@ -12,7 +12,6 @@ export const Profil = () => {
 
   const { id } = useParams();
   const profil = docs?.find(doc => doc.id === +id)
-  console.log(profil);
   return (
     <Container>
       <ProfilContent

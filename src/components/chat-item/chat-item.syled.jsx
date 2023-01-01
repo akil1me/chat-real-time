@@ -3,11 +3,12 @@ import styled from "styled-components";
 export const ItemChat = styled.li`
  margin-bottom: 20px;
   padding:7px;
-  padding-bottom:10px;
+  padding-bottom:17px;
   min-width: 20px;
   max-width:200px;
   border-radius:16px;
   height:auto;
+  overflow-x:hidden;
  
 `
 
@@ -22,11 +23,7 @@ display: flex;
     width:100%;
     font-size: 15px;
     color:#00000091;
-  }
-
-  & >p{
-    max-width:100px;
-  }
+  } 
   }
 `
 export const UserAvatar = styled.img`
@@ -43,6 +40,6 @@ export const UserAvatar = styled.img`
 export const TimeChat = styled.time`
 font-size:11px;
   position: absolute;
-  bottom:-9px;
+  bottom:-15px;
   right: 3px;
 `
