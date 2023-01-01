@@ -8,7 +8,6 @@ export const ItemChat = styled.li`
   max-width:200px;
   border-radius:16px;
   height:auto;
-  overflow-x:hidden;
  
 `
 
@@ -23,7 +22,8 @@ display: flex;
     width:100%;
     font-size: 15px;
     color:#00000091;
-  } 
+  }
+ 
   }
 `
 export const UserAvatar = styled.img`
