@@ -26,4 +26,5 @@ export const SpinnerDiv = styled.div`
 `
 export const PrifileFlex = styled.div`
   display: flex;
+  align-items:flex-start;
 `
