@@ -7,6 +7,7 @@ export const ListChat = styled(List)`
   border-radius: 10px;
   padding:10px 20px ; 
   height:75vh; 
+  overflow-y: scroll;
 
  @media only screen  and (max-width:500px){
   height:72vh;
@@ -29,7 +30,6 @@ export const ListChat = styled(List)`
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #80c6ed; 
-}
-  overflow-y: scroll;
+} 
   
 `

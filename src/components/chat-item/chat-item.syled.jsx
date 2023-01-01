@@ -23,7 +23,9 @@ display: flex;
     font-size: 15px;
     color:#00000091;
   }
- 
+  &> p{
+    word-break:break-all;
+    } 
   }
 `
 export const UserAvatar = styled.img`
