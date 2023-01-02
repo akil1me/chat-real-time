@@ -16,7 +16,7 @@ export const ProfilContent = ({ id, displayName, photoURL, email, edite, deleteP
           <div>
             <PrifileFlex>
               <Image
-                style={{ borderRadius: "50%" }}
+                style={{ borderRadius: "50%", objectFit: "cover" }}
                 width={100}
                 height={100}
                 src={photoURL ? photoURL : "error"}

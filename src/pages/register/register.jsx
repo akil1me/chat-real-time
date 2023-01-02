@@ -1,5 +1,5 @@
 import { LockOutlined, UploadOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Upload } from "antd";
+import { Button, Form, Input, message, Upload } from "antd";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
@@ -13,7 +13,6 @@ const Header = styled.header`
 `
 export const Register = () => {
   const [loading, setLoading] = useState(false)
-  const [err, setErr] = useState("")
 
   const handleSubmitRegister = async (email, password, displayName, file,) => {
     setLoading(true)
@@ -31,29 +30,32 @@ export const Register = () => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateProfile(res.user, {
-              displayName,
-              photoURL: downloadURL
-            })
+            try {
+              await updateProfile(res.user, {
+                displayName,
+                photoURL: downloadURL
+              })
 
-            await setDoc(doc(db, "users", res.user.uid), {
-              uid: res.user.uid,
-              displayName,
-              photoURL: downloadURL,
-              email,
-            })
-
+              await setDoc(doc(db, "users", res.user.uid), {
+                uid: res.user.uid,
+                displayName,
+                photoURL: downloadURL,
+                email,
+              })
+            }
+            catch (err) {
+              message.error(err)
+            }
+            finally {
+              setLoading(false)
+            }
           });
         }
       );
     }
     catch (err) {
-      setErr(err.code)
+      message.error(err.code)
       console.log(err);
-    }
-
-    finally {
-      setLoading(false)
     }
   }
 
@@ -68,7 +70,6 @@ export const Register = () => {
 
       <Container>
         <AuthForm
-          err={err}
           loading={loading}
           handleSubmitRegister={handleSubmitRegister}
           title={"Register"}

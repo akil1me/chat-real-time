@@ -33,7 +33,6 @@ const RulesPassword = [
 ]
 
 export const AuthForm = ({
-  err,
   loading,
   googleAndFacebook,
   title,
@@ -103,11 +102,6 @@ export const AuthForm = ({
                 : <>Or <Link to={"/login"}>Log in here</Link></>
             }
           </Form.Item>
-
-          {
-            err && <span style={{ color: "red" }}>{err}</span>
-          }
-
         </Form>
 
         {

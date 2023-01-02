@@ -15,7 +15,7 @@ export const NavBar = ({ link, title }) => {
       <Row justify="space-between" align="middle">
         <Col>
           <Link to={user ? `/user-profile` : "index.html"}>
-            <img style={{ borderRadius: "50%" }} src={user ? (user.photoURL !== null ? user.photoURL : userImg) : logo} alt="site logo" width={40} height={40} />
+            <img style={{ borderRadius: "50%", objectFit: "cover" }} src={user ? (user.photoURL !== null ? user.photoURL : userImg) : logo} alt="site logo" width={40} height={40} />
           </Link>
         </Col>
         {

@@ -1,20 +1,18 @@
-import { Container, AuthForm, NavBar } from "../../components";
+import { AuthForm, Container, NavBar } from "../../components";
 
-import { GoogleAuthProvider, signInWithPopup, FacebookAuthProvider, signInWithEmailAndPassword } from "firebase/auth";
+import { FacebookAuthProvider, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, db } from "../../utils/firebase";
 
-import styled from "styled-components";
-import { Button } from "antd";
 import { FacebookOutlined, GooglePlusOutlined } from "@ant-design/icons";
-import { useState } from "react";
+import { Button, message } from "antd";
 import { doc, setDoc } from "firebase/firestore";
+import styled from "styled-components";
 
 const Header = styled.header`
   background-color: #bae7ff;
 `
 
 export const Login = () => {
-  const [err, setErr] = useState("")
   const googleProvider = new GoogleAuthProvider();
   const facebookProvider = new FacebookAuthProvider();
 
@@ -54,7 +52,7 @@ export const Login = () => {
       await signInWithEmailAndPassword(auth, email, password)
     }
     catch (err) {
-      setErr(err.code)
+      message.error(err.code)
       console.log(err);
     }
   }
@@ -68,7 +66,7 @@ export const Login = () => {
       </Header>
 
       <Container>
-        <AuthForm err={err} handleSubmitLogin={handleSubmitLogin} title={"Log in"} googleAndFacebook={
+        <AuthForm handleSubmitLogin={handleSubmitLogin} title={"Log in"} googleAndFacebook={
           <>
             <Button
               type="primary"
